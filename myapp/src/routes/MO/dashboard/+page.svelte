@@ -17,7 +17,6 @@
           { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
           { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
           { name: "Acara", href: "/MO/organisasi/acara" }
-          //pppppp
         ]
       },
     ];
