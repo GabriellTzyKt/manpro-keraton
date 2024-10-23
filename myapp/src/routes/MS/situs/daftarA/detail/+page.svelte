@@ -2,22 +2,23 @@
     import Sidebar from '/src/lib/component/sidebar.svelte';
     import Navbar from '/src/lib/component/navbar.svelte';
     
-    export let page = "Detail Acara Organisasi";
+    export let page = "Detail Acara Situs";
     export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
+    export let Manajemen = "Situs";
     let isDropdownOpen = false;
 
     const menuItems = [
-        { name: "Dashboard", href: "/MO/dashboard" },
-        {
-            name: "Organisasi",
-            dropdown: true,
-            subItems: [
-                { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                { name: "Acara", href: "/MO/organisasi/acara" }
-            ]
-        }
+      { name: "Dashboard", href: "/MS/dashboard" },
+      {
+        name: "Situs",
+        dropdown: true,
+        subItems: [
+          { name: "Detail Situs", href: "/MS/situs/detailS" },
+          { name: "Daftar Komunitas", href: "/MS/situs/daftarK" },
+          { name: "Daftar Acara", href: "/MS/situs/daftarA" },
+          { name: "Buku Tamu", href: "/MS/situs/BukuT" }
+        ]
+      },
     ];
 
     const toggleDropdown = (index) => {
@@ -32,7 +33,7 @@
         <div class="event-detail">
             <div class="event-info">
                 <h2>Informasi Acara</h2>
-                <div class="edit-button"><button onclick="window.location.href='/MO/organisasi/acara/ubah'">Ubah</button></div>
+                <div class="edit-button"><button onclick="window.location.href='/MS/situs/daftarA/ubah'">Ubah</button></div>
                 <div class="info-grid">
                     <div><strong>Nama Acara</strong><p>nama acara</p></div>
                     <div><strong>Jenis Acara</strong><p>Terbuka</p></div>
@@ -45,7 +46,10 @@
                     <div><strong>Jam Selesai</strong><p>xx.xx</p></div>
                     <div><strong>Tujuan Acara</strong><p>tujuan acara</p></div>
                     <div class="full-width"><strong>Deskripsi Acara</strong><p>deskripsi acara</p></div>
-                    
+                </div>
+                <div class="button-group">
+                    <button class="tolak-button" onclick="window.location.href='/MS/situs/daftarA'"><img src="/src/lib/images/Tolak.svg" alt="tolak">Tolak</button>
+                    <button class="terima-button" onclick="window.location.href='/MS/situs/daftarA'"><img src="/src/lib/images/Terima.svg" alt="tolak">Terima</button>
                 </div>
             </div>
             <hr class="styled-line">
@@ -114,6 +118,40 @@
 
     .info-grid .full-width {
         grid-column: span 3;
+    }
+    .button-group {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        margin-top: 20px;
+    }
+
+    .tolak-button {
+        background-color: #ff4c4c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        align-content: center;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: normal;
+
+    }
+
+    .terima-button {
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: normal;
+        align-content: center;
     }
 
     .edit-button {

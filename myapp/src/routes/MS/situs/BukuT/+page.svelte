@@ -2,30 +2,31 @@
     import Sidebar from '/src/lib/component/sidebar.svelte';
     import Navbar from '/src/lib/component/navbar.svelte';
 
-    export let page = "Daftar Acara Organisasi";
+    export let page = "Buku Tamu Situs";
     export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
+    export let Manajemen = "Situs";
     import aksiIcon from '/src/lib/images/aksi.svg';
 
     let isDropdownOpen = false;
 
     let searchQuery = "";
-    let organizationFilter = "";
+    let siteFilter = "";
     let itemsPerPage = 8;
     let currentPage = 1;
     const maxItemsPerPage = 14;
 
     const menuItems = [
-        { name: "Dashboard", href: "/MO/dashboard" },
-        {
-            name: "Organisasi",
-            dropdown: true,
-            subItems: [
-                { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                { name: "Acara", href: "/MO/organisasi/acara" }
-            ]
-        }
+      { name: "Dashboard", href: "/MS/dashboard" },
+      {
+        name: "Situs",
+        dropdown: true,
+        subItems: [
+          { name: "Detail Situs", href: "/MS/situs/detailS" },
+          { name: "Daftar Komunitas", href: "/MS/situs/daftarK" },
+          { name: "Daftar Acara", href: "/MS/situs/daftarA" },
+          { name: "Buku Tamu", href: "/MS/situs/BukuT" }
+        ]
+      },
     ];
 
     const toggleDropdown = (index) => {
@@ -33,7 +34,7 @@
     };
         function filteredItems() {
         let filtered = items.filter(item => {
-        const matchesOrganization = !organizationFilter || item.organization === organizationFilter;
+        const matchesOrganization = !siteFilter || item.site === siteFilter;
         const matchesSearchQuery = !searchQuery || item.name.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesOrganization && matchesSearchQuery;
     });
@@ -41,53 +42,47 @@
 
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
-    return filtered.slice(startIndex, endIndex);
-}
+        return filtered.slice(startIndex, endIndex);
+    }
 
-function totalFilteredItems() {
-    return items.filter(item => {
-        const matchesOrganization = !organizationFilter || item.organization === organizationFilter;
-        const matchesSearchQuery = !searchQuery || item.name.toLowerCase().includes(searchQuery.toLowerCase());
-        return matchesOrganization && matchesSearchQuery;
-    }).length;
-}
-
-
+    function totalFilteredItems() {
+        return items.filter(item => {
+            const matchesOrganization = !siteFilter || item.site === siteFilter;
+            const matchesSearchQuery = !searchQuery || item.name.toLowerCase().includes(searchQuery.toLowerCase());
+            return matchesOrganization && matchesSearchQuery;
+        }).length;
+    }
 
     let items = [
-        { id: 1, status: "Berlangsung" },
-        { id: 2, status: "Disetujui" },
+        { id: 1, status: "Diterima" },
+        { id: 2, status: "Diterima" },
         { id: 3, status: "Pending" },
-        { id: 4, status: "Ditolak" },
-        { id: 5, status: "Selesai" },
-        { id: 6, status: "Selesai" },
-        { id: 7, status: "Selesai" },
-        { id: 8, status: "Selesai" },
-        { id: 9, status: "Selesai" },
-        { id: 10, status: "Selesai" },
-        { id: 11, status: "Selesai" },
-        { id: 12, status: "Selesai" },
-        { id: 13, status: "Selesai" },
-        { id: 14, status: "Selesai" },
-        { id: 15, status: "Selesai" },
-        { id: 16, status: "Selesai" },
-        { id: 17, status: "Selesai" },
-        { id: 18, status: "Selesai" }
+        { id: 4, status: "Pending" },
+        { id: 5, status: "Ditolak" },
+        { id: 6, status: "Ditolak" },
+        { id: 7, status: "Diterima" },
+        { id: 8, status: "Ditolak" },
+        { id: 9, status: "Diterima" },
+        { id: 10, status: "Ditolak" },
+        { id: 11, status: "Ditolak" },
+        { id: 12, status: "Diterima" },
+        { id: 13, status: "Ditolak" },
+        { id: 14, status: "Diterima" },
+        { id: 15, status: "Pending" },
+        { id: 16, status: "Diterima" },
+        { id: 17, status: "Diterima" },
+        { id: 18, status: "Diterima" }
 
     ];
 
     function getStatusClass(status) {
         switch (status) {
-            case "Berlangsung":
-                return "status-berlangsung";
-            case "Disetujui":
-                return "status-disetujui";
+            case "Diterima":
+                return "status-diterima";
             case "Pending":
                 return "status-pending";
             case "Ditolak":
                 return "status-ditolak";
-            case "Selesai":
-                return "status-selesai";
             default:
                 return "";
         }
@@ -97,21 +92,15 @@ function totalFilteredItems() {
     let showConfirmModal = false; 
     let modalPosition = { top: 0, left: 0 };
     let showTambahAnggotaModal = false;
+    let selectedRowId = null;
 
-    const openTambahAnggotaModal = () => {
-        showTambahAnggotaModal = true;
-    };
-
-    const closeTambahAnggotaModal = () => {
-        showTambahAnggotaModal = false;
-    };
-
-    const openModal = (event) => {
+    const openModal = (event, rowId) => {
         const buttonRect = event.target.getBoundingClientRect();
         modalPosition = {
             top: buttonRect.top + window.scrollY - buttonRect.height,
             left: buttonRect.left + window.scrollX,
         };
+        selectedRowId = rowId;
         showModal = true;
         setTimeout(() => {
             document.addEventListener('click', handleOutsideClick);
@@ -137,16 +126,65 @@ function totalFilteredItems() {
 
     const closeConfirmModal = () => {
         showConfirmModal = false;
-        removeOutsideClickHandler(); 
+        removeOutsideClickHandler();
     };
 
     const handleArchive = () => {
-        closeConfirmModal(); 
+        if (selectedRowId !== null) {
+            anggotaList = anggotaList.filter(anggota => anggota.id !== selectedRowId);
+            selectedRowId = null;
+        }
+        closeConfirmModal();
     };
 
     const removeOutsideClickHandler = () => {
         document.removeEventListener('click', handleOutsideClick);
     };
+
+    let visits = [
+    {
+      name: '',
+      phone: '',
+      city: '',
+      meetingSomeone: 'Tidak',
+      purpose: '',
+      description: '',
+    },
+  ];
+
+  let showTambahKunjunganModal = false; // Toggle modal visibility
+
+  // Function to add a new visit slot dynamically
+  const tambahKunjungan = () => {
+  visits = [...visits, {
+    name: '',
+    phone: '',
+    city: '',
+    meetingSomeone: 'Tidak',
+    purpose: '',
+    description: '',
+  }];
+  
+  // Optionally scroll to the bottom after adding new data
+  setTimeout(() => {
+    const modalContent = document.querySelector('.scrollable-content');
+    modalContent.scrollTop = modalContent.scrollHeight;
+  }, 0);
+};
+
+// Delete visit slot
+const deleteVisit = (index) => {
+  visits = visits.filter((_, i) => i !== index); // Update the array reactively
+};
+  // Open modal
+  const openTambahKunjunganModal = () => {
+    showTambahKunjunganModal = true;
+  };
+
+  // Close modal
+  const closeTambahKunjunganModal = () => {
+    showTambahKunjunganModal = false;
+  };
 </script>
 
 <main class="layout">
@@ -154,13 +192,78 @@ function totalFilteredItems() {
     <div class="content">
         <Navbar {user} {page} />
         <div class="controls">
-            <button class="add-button" onclick="window.location.href='/MO/organisasi/acara/buat'">+ Tambah Data</button>
+            <button class="tambah-kunjungan-btn" on:click={openTambahKunjunganModal}>+ Tambah Kunjungan</button>
+            {#if showTambahKunjunganModal}
+                <div class="overlay"></div> 
+
+                <div class="tambah-modal">
+                <div class="tambah-modal-content">
+                    <h2>Tambah Kunjungan</h2>
+
+                    <div class="scrollable-content">
+                    {#each visits as visit, index}
+                        <div class="visit-form">
+                        <h3>Kunjungan {index + 1}</h3>
+
+                        <!-- Horizontal layout for each input group -->
+                        <div class="horizontal-layout">
+                            <div class="input-group">
+                            <label>Nama Pengunjung</label>
+                            <input type="text" bind:value={visit.name} />
+                            </div>
+
+                            <div class="input-group">
+                            <label>No. Telp</label>
+                            <input type="text" bind:value={visit.phone} />
+                            </div>
+
+                            <div class="input-group">
+                            <label>Kota Asal</label>
+                            <input type="text" bind:value={visit.city} />
+                            </div>
+
+                            <div class="input-group">
+                            <label>Menemui Sesorang?</label>
+                            <input type="radio" bind:group={visit.meetingSomeone} value="Iya" /> Iya
+                            <input type="radio" bind:group={visit.meetingSomeone} value="Tidak" /> Tidak
+                            </div>
+
+                            {#if visit.meetingSomeone == "Iya"}
+                            <div class="input-group">
+                                <label>Orang yang ingin ditemui</label>
+                                <input type="text" bind:value={visit.personToMeet} />
+                            </div>
+                            {/if}
+
+                            <div class="input-group">
+                            <label>Tujuan</label>
+                            <input type="text" bind:value={visit.purpose} />
+                            </div>
+
+                            <div class="input-group">
+                            <label>Keterangan</label>
+                            <textarea bind:value={visit.description}></textarea>
+                            </div>
+
+                            <button on:click={() => deleteVisit(index)} class="delete-btn">Hapus</button>
+                        </div>
+                        </div>
+                    {/each}
+                    </div>
+
+                    <button on:click={tambahKunjungan} class="tambah-data-btn">Tambah Data</button>
+
+                    <div class="modal-buttons">
+                    <button on:click={closeTambahKunjunganModal} class="cancel-button">Batal</button>
+                    </div>
+                </div>
+                </div>
+            {/if}
+
             <div class="filters">
-                <select bind:value={organizationFilter} class="filter-dropdown">
-                    <option value="">Cari Organisasi</option>
-                    <option value="">Lembaga Dewan Adat Keraton Surakarta</option>
-                </select>
-                <input type="text" bind:value={searchQuery} placeholder="Cari Anggota" class="search-box"/>
+                <input type="date" bind:value={siteFilter} class="filter-dropdown">
+
+                <input type="text" bind:value={searchQuery} placeholder="Cari Pengunjung" class="search-box"/>
             </div>
             <div class="pagination-controls">
                 <label>Show 
@@ -168,19 +271,19 @@ function totalFilteredItems() {
                 </label>
             </div>
         </div>
+        
 
         <div class="menu-container">
             <table class="styled-table">
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID Acara</th>
-                        <th>Nama Acara</th>
-                        <th>Tanggal Acara</th>
-                        <th>Lokasi</th>
-                        <th>Penanggung Jawab</th>
-                        <th>Jenis Acara</th>
-                        <th>Kapasitas</th>
+                        <th>ID Kunjungan</th>
+                        <th>Nama Pengunjung</th>
+                        <th>Tujuan</th>
+                        <th>Tanggal</th>
+                        <th>No. Telp</th>
+                        <th>Keterangan</th>
                         <th>Status</th>
                         <th>Aksi</th>
                     </tr>
@@ -189,13 +292,12 @@ function totalFilteredItems() {
                     {#each filteredItems() as item, index}
                     <tr>
                         <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                        <td>ID Acara</td>
-                        <td>Nama Acara</td>
-                        <td>Tanggal Acara</td>
-                        <td>Lokasi</td>
-                        <td>Penanggung Jawab</td>
-                        <td>Jenis Acara</td>
-                        <td>Kapasitas</td>
+                        <td>ID Kunjungan</td>
+                        <td>Nama Pengunjung</td>
+                        <td>Tujuan</td>
+                        <td>DD-MM-YYYY</td>
+                        <td>No. Telp</td>
+                        <td>Keterangan</td>
                         <td>
                             <span class={getStatusClass(item.status)}>{item.status}</span>
                         </td>
@@ -223,10 +325,7 @@ function totalFilteredItems() {
     {#if showModal}
         <div class="modal" style="top: {modalPosition.top}px; left: {modalPosition.left}px;">
             <div class="modal-content">
-                <button class="modal-button" onclick="window.location.href='/MO/organisasi/acara/detail'">Detail</button>
-                <button class="modal-button" onclick="window.location.href='/MO/organisasi/acara/ubah'">Ubah</button>
-                <button class="modal-button" onclick="window.location.href='/MO/organisasi/acara/laporan'">Laporan</button>
-                <button class="modal-button" on:click={openConfirmModal}>Arsip</button> <!-- Opens the confirmation modal -->
+                <button class="modal-button" on:click={openConfirmModal}>Arsip</button>
             </div>
         </div>
     {/if}
@@ -239,31 +338,6 @@ function totalFilteredItems() {
                 <div class="button-group">
                     <button class="confirm-button confirm-yes" on:click={handleArchive}>Ya</button>
                     <button class="confirm-button confirm-no" on:click={closeConfirmModal}>Tidak</button>
-                </div>
-            </div>
-        </div>
-    {/if}
-    {#if showTambahAnggotaModal}
-        <!-- Modal for "Tambah Anggota" -->
-        <div class="tambah-modal">
-            <div class="tambah-modal-content">
-                <h3>Tambah Anggota</h3>
-                <label for="namaAnggota">Nama Anggota</label>
-                <input type="text" id="namaAnggota" placeholder="Masukkan nama anggota" class="inputTambah" />
-
-                <label for="jabatan">Pilih Jabatan</label>
-                <select id="jabatan" class="inputTambah">
-                    <option value="Anggota">Anggota</option>
-                    <option value="Ketua">Ketua</option>
-                    <option value="Sekretaris">Sekretaris</option>
-                </select>
-
-                <label for="deskripsi" >Deskripsi Tugas</label>
-                <textarea id="deskripsi" placeholder="Masukkan deskripsi tugas" class="inputTambah"></textarea>
-
-                <div class="modal-buttons">
-                    <button on:click={closeTambahAnggotaModal} class="cancel-button">Batal</button>
-                    <button class="save-button">Simpan</button>
                 </div>
             </div>
         </div>
@@ -283,6 +357,119 @@ function totalFilteredItems() {
         background-color: #f8f9fa;
         margin-left: 250px;
     }
+    .tambah-kunjungan-btn {
+        background-color: #004DA3;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .tambah-modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        z-index: 1000;
+        width: 650px;
+        max-height: 500px;
+        overflow: hidden;
+    }
+
+    .scrollable-content {
+        max-height: 300px;
+        overflow-y: auto;
+        margin-bottom: 15px;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+    }
+
+    /* Horizontal layout for input groups */
+    .horizontal-layout {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+
+    }
+
+    /* Align input groups horizontally */
+    .input-group {
+        flex: 1 1 calc(30% - 10px);
+        margin-bottom: 10px;
+        margin-right: 20px;
+    }
+
+    .input-group label {
+        display: block;
+        font-size: 12px;
+        margin-bottom: 4px;
+    }
+
+    .input-group input,
+    .input-group textarea {
+        width: 100%;
+        padding: 6px;
+        font-size: 12px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+    }
+
+    .visit-form {
+        background-color: #f1f3f5;
+        padding: 8px;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        margin-bottom: 10px;
+    }
+
+    .tambah-data-btn {
+        background-color: #28a745;
+        color: white;
+        padding: 8px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+    }
+
+    .delete-btn {
+        background-color: #dc3545;
+        color: white;
+        padding: 5px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        float: right;
+    }
+
+    .modal-buttons {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 10px;
+    }
+
+    .cancel-button {
+        background-color: #b0b0b0;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
 
     .controls {
         display: flex;
@@ -358,7 +545,7 @@ function totalFilteredItems() {
         border-radius: 5px;
     }
     
-    .status-disetujui {
+    .status-diterima {
         background-color: #C1D800;
         color: black;
         padding: 5px 10px;
@@ -413,17 +600,17 @@ function totalFilteredItems() {
     }
 
     .modal {
-    position: absolute;
-    z-index: 1000;
-    background-color: white;
-    padding: 5px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    width: 100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+        position: absolute;
+        z-index: 1000;
+        background-color: white;
+        padding: 5px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        width: 100px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
 

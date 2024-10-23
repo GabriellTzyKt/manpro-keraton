@@ -1,29 +1,29 @@
 <script>
     import Sidebar from '/src/lib/component/sidebar.svelte';
     import Navbar from '/src/lib/component/navbar.svelte';
+
+    export let page = "Daftar Acara Komunitas";
+    export let user = "Sri Apriliani";
+    export let Manajemen = "Komunitas";
     import aksiIcon from '/src/lib/images/aksi.svg';
 
-    export let page = "Anggota Organisasi";
-    export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
-
     let isDropdownOpen = false;
+
     let searchQuery = "";
     let organizationFilter = "";
     let itemsPerPage = 8;
     let currentPage = 1;
-    let totalItems = 57;
     const maxItemsPerPage = 14;
 
     const menuItems = [
-        { name: "Dashboard", href: "/MO/dashboard" },
+        { name: "Dashboard", href: "/MK/dashboard" },
         {
-            name: "Organisasi",
+            name: "Komunitas",
             dropdown: true,
             subItems: [
-                { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                { name: "Acara", href: "/MO/organisasi/acara" }
+                { name: "Detail Komunitas", href: "/MK/komunitas/detailK" },
+                { name: "Daftar Anggota", href: "/MK/komunitas/daftarA" },
+                { name: "Acara", href: "/MK/komunitas/acara" }
             ]
         }
     ];
@@ -31,30 +31,72 @@
     const toggleDropdown = (index) => {
         menuItems[index].isOpen = !menuItems[index].isOpen;
     };
+        function filteredItems() {
+        let filtered = items.filter(item => {
+        const matchesOrganization = !organizationFilter || item.organization === organizationFilter;
+        const matchesSearchQuery = !searchQuery || item.name.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesOrganization && matchesSearchQuery;
+    });
+
+
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return filtered.slice(startIndex, endIndex);
+}
+
+function totalFilteredItems() {
+    return items.filter(item => {
+        const matchesOrganization = !organizationFilter || item.organization === organizationFilter;
+        const matchesSearchQuery = !searchQuery || item.name.toLowerCase().includes(searchQuery.toLowerCase());
+        return matchesOrganization && matchesSearchQuery;
+    }).length;
+}
+
+
+
+    let items = [
+        { id: 1, status: "Berlangsung" },
+        { id: 2, status: "Disetujui" },
+        { id: 3, status: "Pending" },
+        { id: 4, status: "Ditolak" },
+        { id: 5, status: "Selesai" },
+        { id: 6, status: "Selesai" },
+        { id: 7, status: "Selesai" },
+        { id: 8, status: "Selesai" },
+        { id: 9, status: "Selesai" },
+        { id: 10, status: "Selesai" },
+        { id: 11, status: "Selesai" },
+        { id: 12, status: "Selesai" },
+        { id: 13, status: "Selesai" },
+        { id: 14, status: "Selesai" },
+        { id: 15, status: "Selesai" },
+        { id: 16, status: "Selesai" },
+        { id: 17, status: "Selesai" },
+        { id: 18, status: "Selesai" }
+
+    ];
+
+    function getStatusClass(status) {
+        switch (status) {
+            case "Berlangsung":
+                return "status-berlangsung";
+            case "Disetujui":
+                return "status-disetujui";
+            case "Pending":
+                return "status-pending";
+            case "Ditolak":
+                return "status-ditolak";
+            case "Selesai":
+                return "status-selesai";
+            default:
+                return "";
+        }
+    }
 
     let showModal = false;
     let showConfirmModal = false; 
     let modalPosition = { top: 0, left: 0 };
     let showTambahAnggotaModal = false;
-    let selectedRowId = null;
-
-    let anggotaList = [
-        { id: 1, idAnggota: '001', nama: 'John Doe', tanggalBergabung: '2020-01-01', jabatan: 'Anggota', noTelepon: '08123456789', email: 'john@example.com' },
-        { id: 2, idAnggota: '002', nama: 'Jane Doe', tanggalBergabung: '2020-05-15', jabatan: 'Ketua', noTelepon: '08123456788', email: 'jane@example.com' },
-        { id: 3, idAnggota: '003', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 4, idAnggota: '004', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 5, idAnggota: '005', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 6, idAnggota: '006', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 7, idAnggota: '007', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 8, idAnggota: '008', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 9, idAnggota: '009', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 10, idAnggota: '010', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 11, idAnggota: '011', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 12, idAnggota: '012', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 13, idAnggota: '013', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 14, idAnggota: '014', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 15, idAnggota: '015', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-    ];
 
     const openTambahAnggotaModal = () => {
         showTambahAnggotaModal = true;
@@ -64,13 +106,12 @@
         showTambahAnggotaModal = false;
     };
 
-    const openModal = (event, rowId) => {
+    const openModal = (event) => {
         const buttonRect = event.target.getBoundingClientRect();
         modalPosition = {
             top: buttonRect.top + window.scrollY - buttonRect.height,
             left: buttonRect.left + window.scrollX,
         };
-        selectedRowId = rowId;
         showModal = true;
         setTimeout(() => {
             document.addEventListener('click', handleOutsideClick);
@@ -96,56 +137,34 @@
 
     const closeConfirmModal = () => {
         showConfirmModal = false;
-        removeOutsideClickHandler();
+        removeOutsideClickHandler(); 
     };
 
     const handleArchive = () => {
-        if (selectedRowId !== null) {
-            anggotaList = anggotaList.filter(anggota => anggota.id !== selectedRowId);
-            selectedRowId = null;
-        }
-        closeConfirmModal();
+        closeConfirmModal(); 
     };
 
     const removeOutsideClickHandler = () => {
         document.removeEventListener('click', handleOutsideClick);
     };
-
-    // Filter the anggotaList based on searchQuery and organizationFilter
-    $: filteredAnggotaList = anggotaList.filter(anggota => {
-        return (
-            (searchQuery === "" || anggota.nama.toLowerCase().includes(searchQuery.toLowerCase())) &&
-            (organizationFilter === "" || organizationFilter === anggota.organization)
-        );
-    });
-
-    // Update totalItems based on filtered results
-    $: totalItems = filteredAnggotaList.length;
-
-    // Calculate total pages
-    $: totalPages = Math.ceil(totalItems / itemsPerPage);
-
-    // Ensure current page is within valid range after filtering
-    $: currentPage = Math.min(currentPage, totalPages);
 </script>
-
 
 <main class="layout">
     <Sidebar {Manajemen} {menuItems} {toggleDropdown} withDropdown={true} />
     <div class="content">
         <Navbar {user} {page} />
         <div class="controls">
-            <button class="add-button" on:click={openTambahAnggotaModal}>+ Tambah Data</button>
+            <button class="add-button" onclick="window.location.href='/MK/komunitas/acara/buat'">+ Tambah Data</button>
             <div class="filters">
                 <select bind:value={organizationFilter} class="filter-dropdown">
-                    <option value="">Cari Organisasi</option>
+                    <option value="">Cari Komunitas</option>
                     <option value="">Lembaga Dewan Adat Keraton Surakarta</option>
                 </select>
                 <input type="text" bind:value={searchQuery} placeholder="Cari Anggota" class="search-box"/>
             </div>
             <div class="pagination-controls">
                 <label>Show 
-                    <input type="number" bind:value={itemsPerPage} min="1" max="14" on:input={() => itemsPerPage = Math.min(itemsPerPage, maxItemsPerPage)} class="items-per-page"/> entries
+                    <input type="number" bind:value={itemsPerPage} min="1" max={Math.min(maxItemsPerPage, totalFilteredItems())} on:input={() => itemsPerPage = Math.min(itemsPerPage, maxItemsPerPage)} class="items-per-page" /> entries
                 </label>
             </div>
         </div>
@@ -155,41 +174,45 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID Anggota</th>
-                        <th>Nama Anggota</th>
-                        <th>Tanggal Bergabung</th>
-                        <th>Jabatan Organisasi</th>
-                        <th>No Telepon</th>
-                        <th>Email</th>
+                        <th>ID Acara</th>
+                        <th>Nama Acara</th>
+                        <th>Tanggal Acara</th>
+                        <th>Lokasi</th>
+                        <th>Penanggung Jawab</th>
+                        <th>Jenis Acara</th>
+                        <th>Kapasitas</th>
+                        <th>Status</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {#each anggotaList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage) as anggota, index}
-                        <tr>
-                            <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                            <td>{anggota.idAnggota}</td>
-                            <td>{anggota.nama}</td>
-                            <td>{anggota.tanggalBergabung}</td>
-                            <td>{anggota.jabatan}</td>
-                            <td>{anggota.noTelepon}</td>
-                            <td>{anggota.email}</td>
-                            <td>
-                                <button class="action-button" on:click={(event) => openModal(event, anggota.id)}>
-                                    <img src={aksiIcon} alt="Aksi" class="aksi-icon" />
-                                </button>
-                            </td>
-                        </tr>
+                    {#each filteredItems() as item, index}
+                    <tr>
+                        <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
+                        <td>ID Acara</td>
+                        <td>Nama Acara</td>
+                        <td>Tanggal Acara</td>
+                        <td>Lokasi</td>
+                        <td>Penanggung Jawab</td>
+                        <td>Jenis Acara</td>
+                        <td>Kapasitas</td>
+                        <td>
+                            <span class={getStatusClass(item.status)}>{item.status}</span>
+                        </td>
+                        <td><button class="action-button" on:click={openModal}>
+                            <img src={aksiIcon} alt="Aksi" class="aksi-icon" />
+                        </button></td>
+                    </tr>
                     {/each}
                 </tbody>
+                
             </table>
-            <!-- Pagination logic -->
             <div class="pagination">
                 <button on:click={() => currentPage = Math.max(currentPage - 1, 1)}>Previous</button>
-                    {#each Array(totalPages).fill().map((_, i) => i + 1) as page}
-                        <button class:active={page === currentPage} on:click={() => currentPage = page}>{page}</button>
-                    {/each}
-                <button on:click={() => currentPage = Math.min(currentPage + 1, totalPages)}>Next</button>
+                {#each Array(Math.ceil(totalFilteredItems() / itemsPerPage)).fill().map((_, i) => i + 1) as page}
+                    <button class:active={page === currentPage} on:click={() => currentPage = page}>{page}</button>
+                {/each}
+                <button on:click={() => currentPage = Math.min(currentPage + 1, Math.ceil(totalFilteredItems() / itemsPerPage))}>Next</button>
             </div>
         </div>
     </div>
@@ -200,7 +223,9 @@
     {#if showModal}
         <div class="modal" style="top: {modalPosition.top}px; left: {modalPosition.left}px;">
             <div class="modal-content">
-                <button class="modal-button" onclick="window.location.href='/MO/organisasi/daftarA/ubah'">Ubah</button>
+                <button class="modal-button" onclick="window.location.href='/MK/komunitas/acara/detail'">Detail</button>
+                <button class="modal-button" onclick="window.location.href='/MK/komunitas/acara/ubah'">Ubah</button>
+                <button class="modal-button" onclick="window.location.href='/MK/komunitas/acara/laporan'">Laporan</button>
                 <button class="modal-button" on:click={openConfirmModal}>Arsip</button> <!-- Opens the confirmation modal -->
             </div>
         </div>
@@ -324,6 +349,41 @@
 
     .styled-table tr:hover {
         background-color: #f1f3f5;
+    }
+
+    .status-berlangsung {
+        background-color: #0093FF;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+    
+    .status-disetujui {
+        background-color: #C1D800;
+        color: black;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+    
+    .status-pending {
+        background-color: #FFD700;
+        color: black;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+    
+    .status-ditolak {
+        background-color: #FF4343;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+    }
+    
+    .status-selesai {
+        background-color: #C0C0C0;
+        color: black;
+        padding: 5px 10px;
+        border-radius: 5px;
     }
     .action-button{
         color: white;

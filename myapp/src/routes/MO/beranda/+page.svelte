@@ -42,6 +42,7 @@
   .layout {
       display: flex;
       height: 100vh;
+      font-family: sans-serif;
   }
 
   .content {

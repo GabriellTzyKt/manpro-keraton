@@ -3,10 +3,9 @@
     import Navbar from '/src/lib/component/navbar.svelte';
     import { onMount } from 'svelte';
   
-    export let page = "Ubah Detail Organisasi";
+    export let page = "Ubah Detail Komunitas";
     export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
-    let profileImage = "/src/lib/images/profileicon.png";
+    export let Manajemen = "Komunitas";
   
     let organization = {
     name: "Lembaga Dewan Adat Keraton Surakarta",
@@ -32,29 +31,28 @@
       description: organization.description
     }).toString();
 
-    window.location.href = `/MO/organisasi/detailO?${query}`;
+    window.location.href = `/MK/komunitas/detailK?${query}`;
   };
+    let documentationImages = [
+        "/src/lib/images/image1.svg",
+        "/src/lib/images/image2.svg",
+        "/src/lib/images/image3.svg",
+        "/src/lib/images/image4.svg"
+    ];
   
-    function handleFileUpload(event) {
-      const file = event.target.files[0];
-      if (file) {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-              profileImage = e.target.result;
-          };
-          reader.readAsDataURL(file);
-      }
-  }
+    const deleteImage = (index) => {
+        documentationImages.splice(index, 1);
+    };
   
     const menuItems = [
-          { name: "Dashboard", href: "/MO/dashboard" },
+          { name: "Dashboard", href: "/MK/dashboard" },
           {
-              name: "Organisasi",
+              name: "Komunitas",
               dropdown: true,
               subItems: [
-                  { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                  { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                  { name: "Acara", href: "/MO/organisasi/acara" }
+                  { name: "Detail Komunitas", href: "/MK/komunitas/detailK" },
+                  { name: "Daftar Anggota", href: "/MK/komunitas/daftarA" },
+                  { name: "Acara", href: "/MK/komunitas/acara" }
               ]
           }
       ];
@@ -71,8 +69,7 @@
       <div class="organization-detail">
         <div class="profile-section">
           <div class="profile-icon">
-            <img src={profileImage} alt="organisasi">
-              <input type="file" class="upload" on:change={handleFileUpload} />
+            <img src="/src/lib/images/profileicon.png" alt="komunitas"> 
           </div>
         </div>
   
@@ -80,7 +77,7 @@
         <form on:submit|preventDefault={submitForm}>
           <div class="details-section">
             <div class="detail-item">
-              <label class="label">Nama Organisasi</label>
+              <label class="label">Nama Komunitas</label>
               <input class="value" type="text" bind:value={organization.name} />
             </div>
             <div class="detail-item">
@@ -112,7 +109,7 @@
               <input class="value" type="number" bind:value={organization.memberCount} />
             </div>
             <div class="detail-item description">
-              <label class="label">Deskripsi Organisasi</label>
+              <label class="label">Deskripsi Komunitas</label>
               <textarea class="value" rows="4" bind:value={organization.description}></textarea>
             </div>
           </div>

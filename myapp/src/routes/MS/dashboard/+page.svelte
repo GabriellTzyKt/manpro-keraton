@@ -4,19 +4,20 @@
   
     export let page = "Selamat Datang";
     export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
+    export let Manajemen = "Situs";
     let isDropdownOpen = false;
   
     // Define menu items with a dropdown
     const menuItems = [
-      { name: "Dashboard", href: "/MO/dashboard" },
+      { name: "Dashboard", href: "/MS/dashboard" },
       {
-        name: "Organisasi",
+        name: "Situs",
         dropdown: true,
         subItems: [
-          { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-          { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-          { name: "Acara", href: "/MO/organisasi/acara" }
+          { name: "Detail Situs", href: "/MS/situs/detailS" },
+          { name: "Daftar Komunitas", href: "/MS/situs/daftarK" },
+          { name: "Daftar Acara", href: "/MS/situs/daftarA" },
+          { name: "Buku Tamu", href: "/MS/situs/BukuT" }
         ]
       },
     ];

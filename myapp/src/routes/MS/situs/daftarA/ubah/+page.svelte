@@ -2,22 +2,23 @@
     import Sidebar from '/src/lib/component/sidebar.svelte';
     import Navbar from '/src/lib/component/navbar.svelte';
     
-    export let page = "Edit Acara Organisasi";
+    export let page = "Edit Acara Situs";
     export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
+    export let Manajemen = "Situs";
     let isDropdownOpen = false;
 
     const menuItems = [
-        { name: "Dashboard", href: "/MO/dashboard" },
-        {
-            name: "Organisasi",
-            dropdown: true,
-            subItems: [
-                { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                { name: "Acara", href: "/MO/organisasi/acara" }
-            ]
-        }
+      { name: "Dashboard", href: "/MS/dashboard" },
+      {
+        name: "Situs",
+        dropdown: true,
+        subItems: [
+          { name: "Detail Situs", href: "/MS/situs/detailS" },
+          { name: "Daftar Komunitas", href: "/MS/situs/daftarK" },
+          { name: "Daftar Acara", href: "/MS/situs/daftarA" },
+          { name: "Buku Tamu", href: "/MS/situs/BukuT" }
+        ]
+      },
     ];
 
     const toggleDropdown = (index) => {
@@ -101,7 +102,7 @@
                     <textarea placeholder="Deskripsi Acara"></textarea>
                 </div>
                 <div class="submit-button">
-                    <button type="submit" class="save-button" onclick="window.location.href='/MO/organisasi/acara/detail'">Simpan Data</button>
+                    <button type="submit" class="save-button" onclick="window.location.href='/MS/situs/daftarA/detail'">Simpan Data</button>
                 </div>
             </form>
             <hr class="styled-line">
@@ -122,6 +123,7 @@
                   <button class="add-invitation" type="button" on:click={addInvitation}>Tambah Undangan</button>
                 </div>
             </div>
+        </div>
     </div>
 </main>
 

@@ -2,20 +2,20 @@
     import Sidebar from '/src/lib/component/sidebar.svelte';
     import Navbar from '/src/lib/component/navbar.svelte';
     
-    export let page = "Detail Acara Organisasi";
+    export let page = "Detail Acara Komunitas";
     export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
+    export let Manajemen = "Komunitas";
     let isDropdownOpen = false;
 
     const menuItems = [
-        { name: "Dashboard", href: "/MO/dashboard" },
+        { name: "Dashboard", href: "/MK/dashboard" },
         {
-            name: "Organisasi",
+            name: "Komunitas",
             dropdown: true,
             subItems: [
-                { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                { name: "Acara", href: "/MO/organisasi/acara" }
+                { name: "Detail Komunitas", href: "/MK/komunitas/detailK" },
+                { name: "Daftar Anggota", href: "/MK/komunitas/daftarA" },
+                { name: "Acara", href: "/MK/komunitas/acara" }
             ]
         }
     ];
@@ -32,7 +32,7 @@
         <div class="event-detail">
             <div class="event-info">
                 <h2>Informasi Acara</h2>
-                <div class="edit-button"><button onclick="window.location.href='/MO/organisasi/acara/ubah'">Ubah</button></div>
+                <div class="edit-button"><button onclick="window.location.href='/MK/komunitas/acara/ubah'">Ubah</button></div>
                 <div class="info-grid">
                     <div><strong>Nama Acara</strong><p>nama acara</p></div>
                     <div><strong>Jenis Acara</strong><p>Terbuka</p></div>

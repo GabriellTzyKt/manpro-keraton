@@ -90,6 +90,7 @@
     flex-grow: 1;
     margin: 0; /* Remove any potential margin */
     padding: 0; /* Ensure no extra padding is added */
+
   }
 
   .logo {
@@ -109,6 +110,7 @@
     text-align: left;
     color: #89DCF0;
     font-family: sans-serif;
+
   }
 
   .menu-item {
@@ -126,6 +128,7 @@
     color: white;
     font-family: sans-serif;
     cursor: pointer;
+    
   }
 
   .menu-item:is(.active) {

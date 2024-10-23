@@ -4,17 +4,17 @@
 
     export let page = "Ubah Anggota";
     export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
+    export let Manajemen = "Komunitas";
 
     const menuItems = [
-        { name: "Dashboard", href: "/MO/dashboard" },
+        { name: "Dashboard", href: "/MK/dashboard" },
         {
-            name: "Organisasi",
+            name: "Komunitas",
             dropdown: true,
             subItems: [
-                { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                { name: "Acara", href: "/MO/organisasi/acara" }
+                { name: "Detail Komunitas", href: "/MK/komunitas/detailK" },
+                { name: "Daftar Anggota", href: "/MK/komunitas/daftarA" },
+                { name: "Acara", href: "/MK/komunitas/acara" }
             ]
         }
     ];
@@ -121,11 +121,11 @@
 
                 <div class="form-group">
                     <label for="deskripsi">Deskripsi Tugas</label>
-                    <input id="deskripsi" type="text" value="Bertanggung Jawab atas organisasi" />
+                    <input id="deskripsi" type="text" value="Bertanggung Jawab atas komunitas" />
                 </div>
 
                 <div class="form-actions">
-                    <button type="submit" onclick="window.location.href='/MO/organisasi/daftarA'">Simpan Data</button>
+                    <button type="submit" onclick="window.location.href='/MK/komunitas/daftarA'">Simpan Data</button>
                 </div>
             </form>
         </div>

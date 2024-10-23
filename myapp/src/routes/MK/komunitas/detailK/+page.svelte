@@ -3,10 +3,10 @@
   import Navbar from '/src/lib/component/navbar.svelte';
   import { page } from '$app/stores';
 
-  
-  export let page2 = "Detail Organisasi";
+
+  export let page2 = "Detail Komunitas";
   export let user = "Sri Apriliani";
-  export let Manajemen = "Organisasi";
+  export let Manajemen = "Komunitas";
 
   let organization = {
     name: "Lembaga Dewan Adat Keraton Surakarta",
@@ -37,7 +37,24 @@
 
   ];
 
-  const deleteImage = (index) => {
+
+  const menuItems = [
+        { name: "Dashboard", href: "/MK/dashboard" },
+        {
+            name: "Komunitas",
+            dropdown: true,
+            subItems: [
+                { name: "Detail Komunitas", href: "/MK/komunitas/detailK" },
+                { name: "Daftar Anggota", href: "/MK/komunitas/daftarA" },
+                { name: "Acara", href: "/MK/komunitas/acara" }
+            ]
+        }
+    ];
+
+    const toggleDropdown = (index) => {
+        menuItems[index].isOpen = !menuItems[index].isOpen;
+    };
+    const deleteImage = (index) => {
     documentationImages = documentationImages.filter((_, i) => i !== index);
   };
   const handleAddImage = (event) => {
@@ -62,23 +79,6 @@
       reader.readAsDataURL(file);
     }
   };
-
-  const menuItems = [
-        { name: "Dashboard", href: "/MO/dashboard" },
-        {
-            name: "Organisasi",
-            dropdown: true,
-            subItems: [
-                { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                { name: "Acara", href: "/MO/organisasi/acara" }
-            ]
-        }
-    ];
-
-    const toggleDropdown = (index) => {
-        menuItems[index].isOpen = !menuItems[index].isOpen;
-    };
 </script>
 
 <main class="layout">
@@ -88,13 +88,13 @@
       <div class="organization-detail">
         <div class="profile-section">
           <div class="profile-icon">
-            <img src="/src/lib/images/profileicon.png" alt="organisasi"> 
+            <img src="/src/lib/images/profileicon.png" alt="komunitas"> 
           </div>
         </div>
-        <a href="/MO/organisasi/detailO/ubah" class="edit-button">Ubah</a>
+        <a href="/MK/komunitas/detailK/ubah" class="edit-button">Ubah</a>
         <div class="details-section">
           <div class="detail-item">
-            <p class="label">Nama Organisasi</p>
+            <p class="label">Nama Komunitas</p>
             <p class="value">{organization.name}</p>
           </div>
           <div class="detail-item">
@@ -126,7 +126,7 @@
             <p class="value">{organization.memberCount}</p>
           </div>
           <div class="detail-item description">
-            <p class="label">Deskripsi Organisasi</p>
+            <p class="label">Deskripsi Komunitas</p>
             <p class="value">{organization.description}</p>
           </div>
         </div>
@@ -249,87 +249,5 @@
       border-radius: 5px;
       margin-top: 15px;
       cursor: pointer; 
-  }
-  .layout {
-    display: flex;
-    height: 100vh;
-    font-family: sans-serif;
-  }
-
-  .content {
-    flex-grow: 1;
-    padding: 20px;
-    background-color: #f8f9fa;
-    margin-left: 250px;
-  }
-
-  .organization-detail {
-    background: #ffffff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    width: 96.25%;
-    text-align: left;
-  }
-
-  .profile-section {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 30px;
-  }
-
-  .profile-icon img {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-  }
-
-  .edit-button {
-    background-color: #FFC107;
-    color: black;
-    border: none;
-    padding: 10px 60px;
-    border-radius: 5px;
-    text-decoration: none;
-    cursor: pointer;
-  }
-
-  .details-section {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
-  }
-
-  .documentation-section {
-    margin-top: 30px;
-  }
-
-  .image-container {
-    display: flex;
-    overflow-x: auto;
-    gap: 10px;
-    margin-top: 10px;
-  }
-
-  .image-item {
-    position: relative;
-  }
-
-  .delete-button {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    color: red;
-  }
-
-  .add-image-input {
-    margin-top: 15px;
-    cursor: pointer;
   }
 </style>

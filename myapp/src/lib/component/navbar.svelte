@@ -1,11 +1,12 @@
 <script>
     export let page;
+    export let page2;
     export let user;
 </script>
 
 <div class="navbar">
     <div class="navbar-left">
-      <h2>{page}</h2>
+      <h2>{page||page2}</h2>
     </div>
     <div class="navbar-right">
         <div class="user">

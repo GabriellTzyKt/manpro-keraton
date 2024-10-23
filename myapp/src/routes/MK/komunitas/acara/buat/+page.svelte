@@ -2,20 +2,20 @@
     import Sidebar from '/src/lib/component/sidebar.svelte';
     import Navbar from '/src/lib/component/navbar.svelte';
     
-    export let page = "Buat Acara Organisasi";
+    export let page = "Buat Acara Komunitas";
     export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
+    export let Manajemen = "Komunitas";
     let isDropdownOpen = false;
 
     const menuItems = [
-        { name: "Dashboard", href: "/MO/dashboard" },
+        { name: "Dashboard", href: "/MK/dashboard" },
         {
-            name: "Organisasi",
+            name: "Komunitas",
             dropdown: true,
             subItems: [
-                { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                { name: "Acara", href: "/MO/organisasi/acara" }
+                { name: "Detail Komunitas", href: "/MK/komunitas/detailK" },
+                { name: "Daftar Anggota", href: "/MK/komunitas/daftarA" },
+                { name: "Acara", href: "/MK/komunitas/acara" }
             ]
         }
     ];
@@ -123,7 +123,7 @@
                             <textarea placeholder="Deskripsi Acara"></textarea>
                         </div>
                         <div class="submit-button">
-                            <button type="submit" class="save-button" onclick="window.location.href='/MO/organisasi/acara'">Simpan Data</button>
+                            <button type="submit" class="save-button" onclick="window.location.href='/MK/komunitas/acara'">Simpan Data</button>
                         </div>
                     </form>
                     <hr class="styled-line">
@@ -168,7 +168,6 @@
         flex-direction: column;
         margin-left: 250px;
         padding: 20px;
-        margin-top: 20px;
     }
     .styled-line {
         border: none;

@@ -3,9 +3,9 @@
     import Navbar from '/src/lib/component/navbar.svelte';
     import aksiIcon from '/src/lib/images/aksi.svg';
 
-    export let page = "Anggota Organisasi";
+    export let page = "Daftar Komunitas";
     export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
+    export let Manajemen = "Situs";
 
     let isDropdownOpen = false;
     let searchQuery = "";
@@ -16,17 +16,18 @@
     const maxItemsPerPage = 14;
 
     const menuItems = [
-        { name: "Dashboard", href: "/MO/dashboard" },
-        {
-            name: "Organisasi",
-            dropdown: true,
-            subItems: [
-                { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                { name: "Acara", href: "/MO/organisasi/acara" }
-            ]
-        }
-    ];
+    { name: "Dashboard", href: "/MS/dashboard" },
+    {
+      name: "Situs",
+      dropdown: true,
+      subItems: [
+        { name: "Detail Situs", href: "/MS/situs/detailS" },
+        { name: "Daftar Komunitas", href: "/MS/situs/daftarK" },
+        { name: "Daftar Acara", href: "/MS/situs/daftarA" },
+        { name: "Buku Tamu", href: "/MS/situs/BukuT" }
+      ]
+    },
+  ];
 
     const toggleDropdown = (index) => {
         menuItems[index].isOpen = !menuItems[index].isOpen;
@@ -35,33 +36,33 @@
     let showModal = false;
     let showConfirmModal = false; 
     let modalPosition = { top: 0, left: 0 };
-    let showTambahAnggotaModal = false;
+    let showTambahKomunitasModal = false;
     let selectedRowId = null;
 
-    let anggotaList = [
-        { id: 1, idAnggota: '001', nama: 'John Doe', tanggalBergabung: '2020-01-01', jabatan: 'Anggota', noTelepon: '08123456789', email: 'john@example.com' },
-        { id: 2, idAnggota: '002', nama: 'Jane Doe', tanggalBergabung: '2020-05-15', jabatan: 'Ketua', noTelepon: '08123456788', email: 'jane@example.com' },
-        { id: 3, idAnggota: '003', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 4, idAnggota: '004', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 5, idAnggota: '005', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 6, idAnggota: '006', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 7, idAnggota: '007', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 8, idAnggota: '008', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 9, idAnggota: '009', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 10, idAnggota: '010', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 11, idAnggota: '011', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 12, idAnggota: '012', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 13, idAnggota: '013', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 14, idAnggota: '014', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
-        { id: 15, idAnggota: '015', nama: 'Nama Anggota', tanggalBergabung: 'Tanggal Bergabung', jabatan: 'Jabatan', noTelepon: 'No. Telp', email: 'Email' },
+    let komunitasList = [
+        { id: 1, idKomunitas: '001', nama: 'Paguyuban Kawula Keraton Surakarta Jepara', tanggalBergabung: '2020-01-01', PenanggungJawab: 'Paguyuban Kawula Keraton Surakarta Jepara', noTelepon: '123456789', email: 'pakasajepara@gmail.com' },
+        { id: 2, idKomunitas: '002', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 3, idKomunitas: '003', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 4, idKomunitas: '004', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 5, idKomunitas: '005', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 6, idKomunitas: '006', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 7, idKomunitas: '007', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 8, idKomunitas: '008', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 9, idKomunitas: '009', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 10, idKomunitas: '010', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 11, idKomunitas: '011', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 12, idKomunitas: '012', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 13, idKomunitas: '013', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 14, idKomunitas: '014', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
+        { id: 15, idKomunitas: '015', nama: 'Nama Komunitas', tanggalBergabung: 'Tanggal Bergabung', PenanggungJawab: 'Penanggung Jawab', noTelepon: 'No. Telp', email: 'Email' },
     ];
 
-    const openTambahAnggotaModal = () => {
-        showTambahAnggotaModal = true;
+    const openTambahKomunitasModal = () => {
+        showTambahKomunitasModal = true;
     };
 
-    const closeTambahAnggotaModal = () => {
-        showTambahAnggotaModal = false;
+    const closeTambahKomunitasModal = () => {
+        showTambahKomunitasModal = false;
     };
 
     const openModal = (event, rowId) => {
@@ -101,7 +102,7 @@
 
     const handleArchive = () => {
         if (selectedRowId !== null) {
-            anggotaList = anggotaList.filter(anggota => anggota.id !== selectedRowId);
+            komunitasList = komunitasList.filter(komunitas => komunitas.id !== selectedRowId);
             selectedRowId = null;
         }
         closeConfirmModal();
@@ -111,16 +112,16 @@
         document.removeEventListener('click', handleOutsideClick);
     };
 
-    // Filter the anggotaList based on searchQuery and organizationFilter
-    $: filteredAnggotaList = anggotaList.filter(anggota => {
+    // Filter the komunitasList based on searchQuery and organizationFilter
+    $: filteredKomunitasList = komunitasList.filter(komunitas => {
         return (
-            (searchQuery === "" || anggota.nama.toLowerCase().includes(searchQuery.toLowerCase())) &&
-            (organizationFilter === "" || organizationFilter === anggota.organization)
+            (searchQuery === "" || komunitas.nama.toLowerCase().includes(searchQuery.toLowerCase())) &&
+            (organizationFilter === "" || organizationFilter === komunitas.organization)
         );
     });
 
     // Update totalItems based on filtered results
-    $: totalItems = filteredAnggotaList.length;
+    $: totalItems = filteredKomunitasList.length;
 
     // Calculate total pages
     $: totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -135,11 +136,11 @@
     <div class="content">
         <Navbar {user} {page} />
         <div class="controls">
-            <button class="add-button" on:click={openTambahAnggotaModal}>+ Tambah Data</button>
+            <button class="add-button" on:click={openTambahKomunitasModal}>+ Tambah Data</button>
             <div class="filters">
                 <select bind:value={organizationFilter} class="filter-dropdown">
-                    <option value="">Cari Organisasi</option>
-                    <option value="">Lembaga Dewan Adat Keraton Surakarta</option>
+                    <option value="">Cari Komunitas</option>
+                    <option value="">Paguyuban Kawula Keraton Surakarta Jepara</option>
                 </select>
                 <input type="text" bind:value={searchQuery} placeholder="Cari Anggota" class="search-box"/>
             </div>
@@ -155,27 +156,27 @@
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>ID Anggota</th>
-                        <th>Nama Anggota</th>
+                        <th>ID Komunitas</th>
+                        <th>Nama Komunitas</th>
                         <th>Tanggal Bergabung</th>
-                        <th>Jabatan Organisasi</th>
+                        <th>Penanggung Jawab Komunitas</th>
                         <th>No Telepon</th>
                         <th>Email</th>
                         <th>Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {#each anggotaList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage) as anggota, index}
+                    {#each komunitasList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage) as komunitas, index}
                         <tr>
                             <td>{(currentPage - 1) * itemsPerPage + index + 1}</td>
-                            <td>{anggota.idAnggota}</td>
-                            <td>{anggota.nama}</td>
-                            <td>{anggota.tanggalBergabung}</td>
-                            <td>{anggota.jabatan}</td>
-                            <td>{anggota.noTelepon}</td>
-                            <td>{anggota.email}</td>
+                            <td>{komunitas.idKomunitas}</td>
+                            <td>{komunitas.nama}</td>
+                            <td>{komunitas.tanggalBergabung}</td>
+                            <td>{komunitas.PenanggungJawab}</td>
+                            <td>{komunitas.noTelepon}</td>
+                            <td>{komunitas.email}</td>
                             <td>
-                                <button class="action-button" on:click={(event) => openModal(event, anggota.id)}>
+                                <button class="action-button" on:click={(event) => openModal(event, komunitas.id)}>
                                     <img src={aksiIcon} alt="Aksi" class="aksi-icon" />
                                 </button>
                             </td>
@@ -193,14 +194,13 @@
             </div>
         </div>
     </div>
-    {#if showModal || showConfirmModal || showTambahAnggotaModal}
+    {#if showModal || showConfirmModal || showTambahKomunitasModal}
         <div class="overlay"></div> <!-- Add the overlay here -->
     {/if}
 
     {#if showModal}
         <div class="modal" style="top: {modalPosition.top}px; left: {modalPosition.left}px;">
             <div class="modal-content">
-                <button class="modal-button" onclick="window.location.href='/MO/organisasi/daftarA/ubah'">Ubah</button>
                 <button class="modal-button" on:click={openConfirmModal}>Arsip</button> <!-- Opens the confirmation modal -->
             </div>
         </div>
@@ -209,7 +209,7 @@
     {#if showConfirmModal}
         <div class="confirm-modal">
             <div class="confirm-modal-content">
-                <p>Apakah anda ingin mengarsip anggota?</p>
+                <p>Apakah anda ingin mengarsip komunitas?</p>
                 <div class="warning-icon">!</div> <!-- Warning icon -->
                 <div class="button-group">
                     <button class="confirm-button confirm-yes" on:click={handleArchive}>Ya</button>
@@ -218,26 +218,26 @@
             </div>
         </div>
     {/if}
-    {#if showTambahAnggotaModal}
-        <!-- Modal for "Tambah Anggota" -->
+    {#if showTambahKomunitasModal}
+        <!-- Modal for "Tambah Komunitas" -->
         <div class="tambah-modal">
             <div class="tambah-modal-content">
-                <h3>Tambah Anggota</h3>
-                <label for="namaAnggota">Nama Anggota</label>
-                <input type="text" id="namaAnggota" placeholder="Masukkan nama anggota" class="inputTambah" />
-
-                <label for="jabatan">Pilih Jabatan</label>
-                <select id="jabatan" class="inputTambah">
-                    <option value="Anggota">Anggota</option>
-                    <option value="Ketua">Ketua</option>
-                    <option value="Sekretaris">Sekretaris</option>
+                <h3>Tambah Komunitas</h3>
+                <label for="namaKomunitas">Nama Komunitas</label>
+                <select id="komunitas" class="inputTambah">
+                    <option value="Paguyuban Kawula Keraton Surakarta Jepara">Paguyuban Kawula Keraton Surakarta Jepara</option>
+                    <option value="Komunitas Bertapa">Komunitas Bertapa</option>
+                    <option value="Komunitas Musik">Komunitas Musik</option>
                 </select>
 
-                <label for="deskripsi" >Deskripsi Tugas</label>
+                <label for="tanggalBergabung">Tanggal Bergabung</label>
+                <input type="date" class="filter-dropdown">
+
+                <label for="deskripsi" >Deskripsi Komunitas</label>
                 <textarea id="deskripsi" placeholder="Masukkan deskripsi tugas" class="inputTambah"></textarea>
 
                 <div class="modal-buttons">
-                    <button on:click={closeTambahAnggotaModal} class="cancel-button">Batal</button>
+                    <button on:click={closeTambahKomunitasModal} class="cancel-button">Batal</button>
                     <button class="save-button">Simpan</button>
                 </div>
             </div>

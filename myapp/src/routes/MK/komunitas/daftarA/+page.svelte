@@ -3,9 +3,9 @@
     import Navbar from '/src/lib/component/navbar.svelte';
     import aksiIcon from '/src/lib/images/aksi.svg';
 
-    export let page = "Anggota Organisasi";
+    export let page = "Anggota Komunitas";
     export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
+    export let Manajemen = "Komunitas";
 
     let isDropdownOpen = false;
     let searchQuery = "";
@@ -16,14 +16,14 @@
     const maxItemsPerPage = 14;
 
     const menuItems = [
-        { name: "Dashboard", href: "/MO/dashboard" },
+        { name: "Dashboard", href: "/MK/dashboard" },
         {
-            name: "Organisasi",
+            name: "Komunitas",
             dropdown: true,
             subItems: [
-                { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                { name: "Acara", href: "/MO/organisasi/acara" }
+                { name: "Detail Komunitas", href: "/MK/komunitas/detailK" },
+                { name: "Daftar Anggota", href: "/MK/komunitas/daftarA" },
+                { name: "Acara", href: "/MK/komunitas/acara" }
             ]
         }
     ];
@@ -138,7 +138,7 @@
             <button class="add-button" on:click={openTambahAnggotaModal}>+ Tambah Data</button>
             <div class="filters">
                 <select bind:value={organizationFilter} class="filter-dropdown">
-                    <option value="">Cari Organisasi</option>
+                    <option value="">Cari Komunitas</option>
                     <option value="">Lembaga Dewan Adat Keraton Surakarta</option>
                 </select>
                 <input type="text" bind:value={searchQuery} placeholder="Cari Anggota" class="search-box"/>
@@ -158,7 +158,7 @@
                         <th>ID Anggota</th>
                         <th>Nama Anggota</th>
                         <th>Tanggal Bergabung</th>
-                        <th>Jabatan Organisasi</th>
+                        <th>Jabatan Komunitas</th>
                         <th>No Telepon</th>
                         <th>Email</th>
                         <th>Aksi</th>
@@ -200,7 +200,7 @@
     {#if showModal}
         <div class="modal" style="top: {modalPosition.top}px; left: {modalPosition.left}px;">
             <div class="modal-content">
-                <button class="modal-button" onclick="window.location.href='/MO/organisasi/daftarA/ubah'">Ubah</button>
+                <button class="modal-button" onclick="window.location.href='/MK/komunitas/daftarA/ubah'">Ubah</button>
                 <button class="modal-button" on:click={openConfirmModal}>Arsip</button> <!-- Opens the confirmation modal -->
             </div>
         </div>

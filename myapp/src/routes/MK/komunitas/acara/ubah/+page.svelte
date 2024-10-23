@@ -2,20 +2,20 @@
     import Sidebar from '/src/lib/component/sidebar.svelte';
     import Navbar from '/src/lib/component/navbar.svelte';
     
-    export let page = "Edit Acara Organisasi";
+    export let page = "Edit Acara Komunitas";
     export let user = "Sri Apriliani";
-    export let Manajemen = "Organisasi";
+    export let Manajemen = "Komunitas";
     let isDropdownOpen = false;
 
     const menuItems = [
-        { name: "Dashboard", href: "/MO/dashboard" },
+        { name: "Dashboard", href: "/MK/dashboard" },
         {
-            name: "Organisasi",
+            name: "Komunitas",
             dropdown: true,
             subItems: [
-                { name: "Detail Organisasi", href: "/MO/organisasi/detailO" },
-                { name: "Daftar Anggota", href: "/MO/organisasi/daftarA" },
-                { name: "Acara", href: "/MO/organisasi/acara" }
+                { name: "Detail Komunitas", href: "/MK/komunitas/detailK" },
+                { name: "Daftar Anggota", href: "/MK/komunitas/daftarA" },
+                { name: "Acara", href: "/MK/komunitas/acara" }
             ]
         }
     ];
@@ -101,7 +101,7 @@
                     <textarea placeholder="Deskripsi Acara"></textarea>
                 </div>
                 <div class="submit-button">
-                    <button type="submit" class="save-button" onclick="window.location.href='/MO/organisasi/acara/detail'">Simpan Data</button>
+                    <button type="submit" class="save-button" onclick="window.location.href='/MK/komunitas/acara/detail'">Simpan Data</button>
                 </div>
             </form>
             <hr class="styled-line">
@@ -122,6 +122,7 @@
                   <button class="add-invitation" type="button" on:click={addInvitation}>Tambah Undangan</button>
                 </div>
             </div>
+        </div>
     </div>
 </main>
 
@@ -195,38 +196,39 @@
     }
 
     .invitation-section {
-        margin-top: 20px;
-    }
+    margin-top: 20px;
+  }
 
-    .invitation-list {
-        display: flex;
-        flex-direction: column;
-    }
+  .invitation-list {
+    display: flex;
+    flex-direction: column;
+  }
 
-    .invitation-item {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 10px;
-    }
+  .invitation-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
 
-    .delete-button {
-        background: none;
-        border: none;
-        cursor: pointer;
-        color: red;
-    }
+  .delete-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: red;
+  }
 
-    .add-invitation {
-        background-color: #007bff;
-        color: white;
-        border: none;
-        padding: 10px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
+  .add-invitation {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+  }
 
-    h3 {
-        margin-bottom: 16px;
-    }
+  h3 {
+    margin-bottom: 16px;
+  }
 </style>
