@@ -77,7 +77,7 @@ class _EventPageState extends State<EventPage> {
           children: [
             // Search bar di bagian atas
             Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(20.0),
               child: TextField(
                 decoration: InputDecoration(
                   hintText: 'Telusuri...',
@@ -100,35 +100,38 @@ class _EventPageState extends State<EventPage> {
                       .toLowerCase()
                       .contains(searchQuery)) // Filter berdasarkan pencarian
                   .map((event) {
-                return Card(
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15.0), // Membuat gambar rounded
-                        child: Image.asset( // Menggunakan gambar lokal dari folder assets
-                          event['image']!,
-                          height: 200,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), // Tambahkan padding di sini
+                  child: Card(
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0), // Membuat gambar rounded
+                          child: Image.asset( // Menggunakan gambar lokal dari folder assets
+                            event['image']!,
+                            height: 200,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      ListTile(
-                        title: Text(event['title']!),
-                        subtitle: Text(event['location']!),
-                        leading: Icon(Icons.location_on_sharp),
-                        trailing: ElevatedButton(
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EventDetailPage(event: event), // Ambil 1 event berdasarkan index
-                              ),
-                            );
-                          },
-                          child: Text('Detail'),
+                        ListTile(
+                          title: Text(event['title']!),
+                          subtitle: Text(event['location']!),
+                          leading: Icon(Icons.location_on_sharp),
+                          trailing: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EventDetailPage(event: event), // Ambil 1 event berdasarkan index
+                                ),
+                              );
+                            },
+                            child: Text('Detail'),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 );
               }).toList(),
