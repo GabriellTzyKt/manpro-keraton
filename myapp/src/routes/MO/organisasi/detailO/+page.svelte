@@ -88,7 +88,7 @@
       <div class="organization-detail">
         <div class="profile-section">
           <div class="profile-icon">
-            <img src="/src/lib/images/profileicon.png" alt="organisasi"> 
+            <img src="/src/lib/images/profileicon.svg" alt="organisasi"> 
           </div>
         </div>
         <a href="/MO/organisasi/detailO/ubah" class="edit-button">Ubah</a>

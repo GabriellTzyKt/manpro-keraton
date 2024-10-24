@@ -22,7 +22,7 @@
     wisata: "wisata"
   };
 
-  let profileImage = "/src/lib/images/profileicon.png";
+  let profileImage = "/src/lib/images/profileicon.svg";
 
   const menuItems = [
     { name: "Dashboard", href: "/MS/dashboard" },

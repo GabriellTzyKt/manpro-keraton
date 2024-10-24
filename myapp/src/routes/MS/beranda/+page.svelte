@@ -26,7 +26,7 @@
             <div class="menu-grid">
                 {#each Array(8) as _, index}
                     <div class="menu-card">
-                        <img src="/src/lib/images/profileicon.png" alt="organisasi"> 
+                        <img src="/src/lib/images/profileicon.svg" alt="organisasi"> 
                         <span>{situs}</span>
                         <div class="button-layout">
                             <a class="button" href="/MS/dashboard">Details</a>

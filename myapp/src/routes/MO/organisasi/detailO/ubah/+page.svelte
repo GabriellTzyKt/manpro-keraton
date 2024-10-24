@@ -6,7 +6,7 @@
     export let page = "Ubah Detail Organisasi";
     export let user = "Sri Apriliani";
     export let Manajemen = "Organisasi";
-    let profileImage = "/src/lib/images/profileicon.png";
+    let profileImage = "/src/lib/images/profileicon.svg";
   
     let organization = {
     name: "Lembaga Dewan Adat Keraton Surakarta",

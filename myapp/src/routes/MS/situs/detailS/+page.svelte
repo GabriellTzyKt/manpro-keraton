@@ -4,7 +4,7 @@
     import { page } from '$app/stores';
   
     
-    export let page2 = "Detail Organisasi";
+    export let page2 = "Detail Situs";
     export let user = "Sri Apriliani";
     export let Manajemen = "Situs";
   
@@ -63,7 +63,7 @@
         <div class="site-detail">
             <div class="profile-section">
                 <div class="profile-icon">
-                    <img src="/src/lib/images/profileicon.png" alt="situs"> 
+                    <img src="/src/lib/images/profileicon.svg" alt="situs"> 
                 </div>
             </div>
             <a href="/MS/situs/detailS/ubah" class="edit-button">Ubah Situs</a>
